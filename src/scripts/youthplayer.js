@@ -95,4 +95,9 @@ let getUserId = function(managerUrl) {
 	    });
 }
 
-run();
+chrome.storage.local.get(['thread'], function(result) {
+	if(!result.thread) {
+		chrome.storage.local.set({"thread":'17084291.1'}, function(){});
+	}
+	run();
+});
