@@ -1,0 +1,42 @@
+{
+	"appName": {
+		"message": "Ayudante de correos para Sub17",
+		"description": "Nombre de la aplicacion."
+	},
+	"appDescription":{
+		"message": "Simplifica el proceso de envio de mails para reclutadores del equipo Sub17 de Argentina",
+		"description": "Descripcion de la aplicacion."
+	},
+	"sendmail": {
+		"message": "Enviar Mail",
+		"description": "Tooltip de enviar mail."
+	},
+	"promptThread": {
+		"message": "Cuál es el hilo de la conferencia (Ej: 17084291.1)",
+		"description": "Pregunta para saber el numero del hilo."
+	},
+	"normal": {
+		"message": "Template 1 - Normal",
+		"description": "Template 1."
+	},
+	"bestNoFriendly": {
+		"message": "Template 2 - Mejores Sin Amistosos", 
+		"description": "Template 2."
+	},
+	"bestNoLeague": {
+		"message": "Template 3 - Mejores Sin Liga de 4",
+		"description": "Template 3"
+	},
+	"bestNormal": {
+		"message": "Template 4 - Mejores Normal",
+		"description": "Template 4."
+	},
+	"noUserFound": {
+		"message": "No se encontro usuario para este jugador",
+		"description": "Mensaje de error si no se encuentra al manager."
+	},
+	"popupTitle": {
+		"message": "Configurar opciones de la herramienta",
+		"description": "Tooltip del popup."
+	}
+}
