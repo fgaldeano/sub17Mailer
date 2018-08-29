@@ -42,9 +42,10 @@
     "name": "__MSG_appName__",
     "permissions": [
     	"activeTab", 
-    	"storage"
+    	"storage",
+        "https://drive.google.com/*"
     ],
-    "version": "1.0",
+    "version": "1.0.1",
     "web_accessible_resources" : [
     	"resources/*.jpg",
     	"resources/*.png",
