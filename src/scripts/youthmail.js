@@ -21,6 +21,7 @@ const mailSubject = document.getElementById('ctl00_ctl00_CPContent_CPMain_tbSubj
 const table = document.getElementsByClassName('form thin')[0] ;
 const container = document.createElement('DIV');
 const threadSpan = document.createElement('SPAN');
+let asycCompleted = 0;
 
 const run = function() {
 	if(!player) {
@@ -38,6 +39,8 @@ const run = function() {
 
 const createThreadSpan = function() {
 	threadSpan.innerHTML = '&nbsp;';
+	threadSpan.id = 'threadSpan';
+	threadSpan.title = 'id';
 	let row = document.createElement('TR');
 	row.appendChild(document.createElement('TD'));
 	let td = document.createElement('TD');
@@ -52,13 +55,14 @@ const hide = function(elm) {
 
 const show = function(elm) {
 	elm.style.visibility = 'visible';
+	asycCompleted++;
 }
 
 const sendMailAction = function(index) {
 	if(!thread || !bodies[index]) {
 		return;
 	}
-	mailBody.value = bodies[index].normalize().replace('{0}', player.name).replace('{1}', '[youthplayerid=' + player.id + ']').replace('{4}', thread);
+	mailBody.value = bodies[index].normalize().replace('{0}', player.name).replace('{1}', '[youthplayerid=' + player.id + ']').replace('{4}', threadSpan.title);
 };
 
 const createButton = function(message, index) {
@@ -89,10 +93,12 @@ bodies.map((body, index) => {
 		.then(response => response.text())
 		.then(text => {
 			let txt = text.substring(text.indexOf('"s":"') + 5).split('"', 2);
-			show(container);
 			show(buttons[index]);
 			let result = txt[0].replace(/\\n/g, '\n').replace(/\\u003d/, '=');
 			bodies[index] = result;
+			if(asycCompleted > 5) {
+				show(container);
+			}
 			return result;
 		})
 		.catch(err => console.log(err));
@@ -107,7 +113,7 @@ chrome.storage.local.get(['thread'], result => {
 			let parser = new DOMParser();
 		    let htmlDocument = parser.parseFromString(text, "text/html");
 			let result = htmlDocument.querySelectorAll('div.mainConf > div.boxHead > h2 > span.float_left > a[href*="/Forum/Read.aspx"]');
-			threadSpan.id = thread;
+			threadSpan.title = thread;
 			
 			for(title of result) {
 				if(title.innerText.indexOf('Sub17') !== -1) {
@@ -117,6 +123,10 @@ chrome.storage.local.get(['thread'], result => {
 			}
 			if(threadSpan.innerHTML === '&nbsp;') {
 				threadSpan.innerText = chrome.i18n.getMessage('threadNotFound');
+				asycCompleted++;
+			}
+			if(asycCompleted > 5) {
+				show(container);
 			}
 		})
 		.catch(err => console.log(err));
