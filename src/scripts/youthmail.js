@@ -13,11 +13,14 @@ const msgs = [
 	chrome.i18n.getMessage('bestNormal')
 ];
 let buttons;
+let thread;
 
 let player;
 const mailBody = document.getElementById('ctl00_ctl00_CPContent_CPMain_ucEditorMain_txtBody');
 const mailSubject = document.getElementById('ctl00_ctl00_CPContent_CPMain_tbSubject');
+const table = document.getElementsByClassName('form thin')[0] ;
 const container = document.createElement('DIV');
+const threadSpan = document.createElement('SPAN');
 
 const run = function() {
 	if(!player) {
@@ -25,12 +28,23 @@ const run = function() {
 	}
 	mailSubject.value = subject.replace(':playerName', player.name);
 	container.className = 'pasteMailContainer';
-	hide(container)
+	hide(container);
+	createThreadSpan();
     buttons = msgs.map((message, index) => createButton(message, index));
 
 	let sendMailButton = document.getElementById('ctl00_ctl00_CPContent_CPMain_btnSendNew');
 	sendMailButton.addEventListener('click', () => clearPlayer());
 };
+
+const createThreadSpan = function() {
+	threadSpan.innerHTML = '&nbsp;';
+	let row = document.createElement('TR');
+	row.appendChild(document.createElement('TD'));
+	let td = document.createElement('TD');
+	row.appendChild(td);
+	td.appendChild(threadSpan);
+	table.appendChild(row);
+}
 
 const hide = function(elm) {
 	elm.style.visibility = 'hidden';
@@ -41,13 +55,10 @@ const show = function(elm) {
 }
 
 const sendMailAction = function(index) {
-    chrome.storage.local.get(['thread'], result => {
-		let thread = result.thread;
-		if(!thread || !bodies[index]) {
-			return;
-		}
-		mailBody.value = bodies[index].normalize().replace('{0}', player.name).replace('{1}', '[youthplayerid=' + player.id + ']').replace('{4}', thread);
-	});
+	if(!thread || !bodies[index]) {
+		return;
+	}
+	mailBody.value = bodies[index].normalize().replace('{0}', player.name).replace('{1}', '[youthplayerid=' + player.id + ']').replace('{4}', thread);
 };
 
 const createButton = function(message, index) {
@@ -75,13 +86,38 @@ chrome.storage.local.get(['player'], result => {
 
 bodies.map((body, index) => {
 	fetch(urls[index])
-	.then(response => response.text())
-	.then(text => {
-		let txt = text.substring(text.indexOf('"s":"') + 5).split('"', 2);
-		show(container);
-		show(buttons[index]);
-		let result = txt[0].replace(/\\n/g, '\n').replace(/\\u003d/, '=');
-		bodies[index] = result;
-		return result;
-	});
+		.then(response => response.text())
+		.then(text => {
+			let txt = text.substring(text.indexOf('"s":"') + 5).split('"', 2);
+			show(container);
+			show(buttons[index]);
+			let result = txt[0].replace(/\\n/g, '\n').replace(/\\u003d/, '=');
+			bodies[index] = result;
+			return result;
+		})
+		.catch(err => console.log(err));
+});
+
+chrome.storage.local.get(['thread'], result => {
+	thread = result.thread;
+	let splitted = thread.split('.');
+	fetch('/Forum/Read.aspx?t=' + splitted[0] + '&n=' + splitted[1] + '&v4')
+		.then(response => response.text())
+		.then(text => {
+			let parser = new DOMParser();
+		    let htmlDocument = parser.parseFromString(text, "text/html");
+			let result = htmlDocument.querySelectorAll('div.mainConf > div.boxHead > h2 > span.float_left > a[href*="/Forum/Read.aspx"]');
+			threadSpan.id = thread;
+			
+			for(title of result) {
+				if(title.innerText.indexOf('Sub17') !== -1) {
+					threadSpan.innerText = title.innerText;
+					break;
+				}
+			}
+			if(threadSpan.innerHTML === '&nbsp;') {
+				threadSpan.innerText = chrome.i18n.getMessage('threadNotFound');
+			}
+		})
+		.catch(err => console.log(err));
 });

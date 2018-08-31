@@ -38,5 +38,9 @@
 	"popupTitle": {
 		"message": "Configurar opciones de la herramienta",
 		"description": "Tooltip del popup."
+	},
+	"threadNotFound": {
+		"message": "Conferencia no encontrada o no es de la Sub17",
+		"description": "Mensaje de error si no se encuentra la conferencia con titulo Sub17."
 	}
 }
