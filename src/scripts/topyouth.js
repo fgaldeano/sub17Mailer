@@ -23,7 +23,7 @@ const addExportButton = function() {
 };
 
 const getExportData = function() {
-	const header = ['Nombre', 'Edad', 'Dias para promoción', 'Especialidad', 'Rendimiento'];
+	const header = ['Id', 'Nombre', 'Edad', 'Dias para promoción', 'Especialidad', 'Rendimiento'];
 
 	csvContent = "data:text/csv;charset=utf-8," + header.join(',') + '\r\n';
 	for(let tr of results) {
@@ -37,12 +37,15 @@ const getRowFromTR = function(tr) {
 	let rowArray = [];
 	for(let td of tr.querySelectorAll('td')) {
 		let images = td.querySelectorAll('img');
-		if(images.length === 0) {
-			rowArray.push(td.innerText.trim());
-		}
-		else {
+		let playerLink = td.querySelector('a');
+		if(images.length > 0) {
 			rowArray.push(getNumberFromStars(images));
+			continue;
 		}
+		if(playerLink) {
+			rowArray.push(playerLink.href.substring(playerLink.href.indexOf('=') + 1));
+		}
+		rowArray.push(td.innerText.trim());
 	}
 	return rowArray;
 };
