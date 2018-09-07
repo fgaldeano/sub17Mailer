@@ -42,5 +42,9 @@
 	"threadNotFound": {
 		"message": "Conferencia no encontrada o no es de la Sub17",
 		"description": "Mensaje de error si no se encuentra la conferencia con titulo Sub17."
+	},
+	"exportToCsv": {
+		"message": "Exportar a csv",
+		"description": "Texto a mostrar en el link a exportar a csv."
 	}
 }

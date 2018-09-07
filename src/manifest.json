@@ -27,6 +27,18 @@
                 "http://*.hattrick.org/MyHattrick/Inbox/*newMail*",
                 "https://*.hattrick.org/MyHattrick/Inbox/*newMail*"
             ]
+        },
+        {
+            "css": [
+                "styles/youth.css"
+            ],
+            "js": [
+                "scripts/topyouth.js"
+            ],
+            "matches": [
+                "http://*.hattrick.org/World/Players/TopYouthPlayers*",
+                "https://*.hattrick.org/World/Players/TopYouthPlayers*"
+            ]
         }
     ],
     "default_locale": "es",

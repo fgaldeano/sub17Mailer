@@ -37,6 +37,11 @@
 	cursor: pointer;
 }
 
+.exportLink {
+	float: right;
+	padding-bottom: 5px;
+}
+
 @-moz-document url-prefix() {
 	#sendMailButton {
 		background-image: url('moz-extension://__MSG_@@extension_id__/resources/mail.png');
