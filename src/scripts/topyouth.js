@@ -2,6 +2,7 @@
 const results = document.querySelectorAll('#pnlResult > div.mainBox > table.tablesorter > tbody > tr');
 const panel = document.getElementById('pnlResult');
 const playerType = document.getElementById('ctl00_ctl00_CPContent_CPMain_ddlPosition');
+const ageInput = document.getElementById('ctl00_ctl00_CPContent_CPMain_txtAge');
 let csvContent
 
 const run = function() {
@@ -23,11 +24,12 @@ const addExportButton = function() {
 };
 
 const getExportData = function() {
-	const header = ['Id', 'Nombre', 'Años', 'Días', 'Dias para promoción', 'Especialidad', 'Rendimiento'];
+        const header = ['Nombre', 'Id', 'Años', 'Días', 'Dias para promoción', 'Especialidad', 'Rendimiento', 'Posición'];
+        let playerPosition = playerType.options[playerType.selectedIndex].text;
 
 	csvContent = "data:text/csv;charset=utf-8," + header.join(',') + '\r\n';
 	for(let tr of results) {
-		let row = getRowFromTR(tr).join(',');
+		let row = getRowFromTR(tr).join(',') + "," + playerPosition;
 		csvContent += row + '\r\n';
 	}
 
@@ -40,9 +42,10 @@ const getRowFromTR = function(tr) {
 		let images = td.querySelectorAll('img');
 		let playerLink = td.querySelector('a');
 		let innerText = td.innerText.trim();
-		if(index === 0 && playerLink) {
+	        if(index === 0 && playerLink) {
+		        rowArray.push(innerText);
 			rowArray.push(playerLink.href.substring(playerLink.href.indexOf('=') + 1));
-			rowArray.push(innerText);
+
 		}
 		if(index === 1 && innerText.indexOf('(') !== -1) {
 			let splitted = innerText.split(' (');
@@ -56,7 +59,7 @@ const getRowFromTR = function(tr) {
 			rowArray.push(getNumberFromStars(images));
 		}
 		index++;
-	}
+	}    
 	return rowArray;
 };
 
@@ -80,8 +83,12 @@ const getNumberFromStars = function(images) {
 const getFileName = function() {
     if (playerType.selectedIndex == -1)
         return null;
-
-    return playerType.options[playerType.selectedIndex].text.replace(' ', '_') + '.csv';
+    let rawAge = ageInput.value;
+    let age = parseInt(rawAge);
+    if ((age == "NaN") || (age > 17 || age < 15))
+	return playerType.options[playerType.selectedIndex].text.replace(' ', '_') + '.csv';
+    else
+	return playerType.options[playerType.selectedIndex].text.replace(' ', '_') + ' (' + rawAge + ')' + '.csv';
 }
 
 run();
