@@ -23,7 +23,7 @@ const addExportButton = function() {
 };
 
 const getExportData = function() {
-	const header = ['Id', 'Nombre', 'Edad', 'Dias para promoción', 'Especialidad', 'Rendimiento'];
+	const header = ['Id', 'Nombre', 'Años', 'Días', 'Dias para promoción', 'Especialidad', 'Rendimiento'];
 
 	csvContent = "data:text/csv;charset=utf-8," + header.join(',') + '\r\n';
 	for(let tr of results) {
@@ -35,17 +35,27 @@ const getExportData = function() {
 
 const getRowFromTR = function(tr) {
 	let rowArray = [];
+	let index = 0;
 	for(let td of tr.querySelectorAll('td')) {
 		let images = td.querySelectorAll('img');
 		let playerLink = td.querySelector('a');
-		if(images.length > 0) {
-			rowArray.push(getNumberFromStars(images));
-			continue;
-		}
-		if(playerLink) {
+		let innerText = td.innerText.trim();
+		if(index === 0 && playerLink) {
 			rowArray.push(playerLink.href.substring(playerLink.href.indexOf('=') + 1));
+			rowArray.push(innerText);
 		}
-		rowArray.push(td.innerText.trim());
+		if(index === 1 && innerText.indexOf('(') !== -1) {
+			let splitted = innerText.split(' (');
+			rowArray.push(splitted[0]);
+			rowArray.push(splitted[1].substring(0, splitted[1].length - 1));
+		}
+		if(index > 1 && index < 4) {
+			rowArray.push(innerText);
+		}
+		if(index === 4 && images.length > 0) {
+			rowArray.push(getNumberFromStars(images));
+		}
+		index++;
 	}
 	return rowArray;
 };
