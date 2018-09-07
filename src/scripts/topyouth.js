@@ -5,7 +5,7 @@ const playerType = document.getElementById('ctl00_ctl00_CPContent_CPMain_ddlPosi
 let csvContent
 
 const run = function() {
-	if(!results) {
+	if(results.length === 0) {
 		return;
 	}
 	getExportData();

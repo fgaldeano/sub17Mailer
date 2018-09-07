@@ -57,7 +57,7 @@
     	"storage",
         "https://drive.google.com/*"
     ],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "web_accessible_resources" : [
     	"resources/*.jpg",
     	"resources/*.png",
