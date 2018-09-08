@@ -46,5 +46,37 @@
 	"exportToCsv": {
 		"message": "Exportar a csv",
 		"description": "Texto a mostrar en el link a exportar a csv."
+	},
+	"csvHeader_id": {
+		"message": "Id",
+		"description": "header for csv exports."
+	},
+	"csvHeader_name": {
+		"message": "Nombre",
+		"description": "header for csv exports."
+	},
+	"csvHeader_years": {
+		"message": "Años",
+		"description": "header for csv exports."
+	},
+	"csvHeader_days": {
+		"message": "Días",
+		"description": "header for csv exports."
+	},
+	"csvHeader_toPromote": {
+		"message": "Dias para promoción",
+		"description": "header for csv exports."
+	},
+	"csvHeader_specialty": {
+		"message": "Especialidad",
+		"description": "header for csv exports."
+	},
+	"csvHeader_stars": {
+		"message": "Rendimiento",
+		"description": "header for csv exports."
+	},
+	"csvHeader_position": {
+		"message": "Posición",
+		"description": "header for csv exports."
 	}
 }

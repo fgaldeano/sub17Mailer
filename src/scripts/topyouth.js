@@ -1,8 +1,7 @@
-
 const results = document.querySelectorAll('#pnlResult > div.mainBox > table.tablesorter > tbody > tr');
-const panel = document.getElementById('pnlResult');
-const playerType = document.getElementById('ctl00_ctl00_CPContent_CPMain_ddlPosition');
-const ageInput = document.getElementById('ctl00_ctl00_CPContent_CPMain_txtAge');
+const panel = document.querySelector('#pnlResult');
+const playerType = document.querySelector('#ctl00_ctl00_CPContent_CPMain_ddlPosition');
+const ageInput = document.querySelector('#ctl00_ctl00_CPContent_CPMain_txtAge');
 let csvContent
 
 const run = function() {
@@ -24,15 +23,23 @@ const addExportButton = function() {
 };
 
 const getExportData = function() {
-        const header = ['Nombre', 'Id', 'Años', 'Días', 'Dias para promoción', 'Especialidad', 'Rendimiento', 'Posición'];
-        let playerPosition = playerType.options[playerType.selectedIndex].text;
+    const header = [
+    	chrome.i18n.getMessage('csvHeader_name'), 
+		chrome.i18n.getMessage('csvHeader_id'), 
+		chrome.i18n.getMessage('csvHeader_years'), 
+		chrome.i18n.getMessage('csvHeader_days'), 
+		chrome.i18n.getMessage('csvHeader_toPromote'), 
+		chrome.i18n.getMessage('csvHeader_specialty'), 
+		chrome.i18n.getMessage('csvHeader_stars'), 
+		chrome.i18n.getMessage('csvHeader_position')
+	];
+    let playerPosition = playerType.options[playerType.selectedIndex].text;
 
 	csvContent = "data:text/csv;charset=utf-8," + header.join(',') + '\r\n';
 	for(let tr of results) {
 		let row = getRowFromTR(tr).join(',') + "," + playerPosition;
 		csvContent += row + '\r\n';
 	}
-
 };
 
 const getRowFromTR = function(tr) {
@@ -42,10 +49,9 @@ const getRowFromTR = function(tr) {
 		let images = td.querySelectorAll('img');
 		let playerLink = td.querySelector('a');
 		let innerText = td.innerText.trim();
-	        if(index === 0 && playerLink) {
-		        rowArray.push(innerText);
+	    if(index === 0 && playerLink) {
+			rowArray.push(innerText);
 			rowArray.push(playerLink.href.substring(playerLink.href.indexOf('=') + 1));
-
 		}
 		if(index === 1 && innerText.indexOf('(') !== -1) {
 			let splitted = innerText.split(' (');

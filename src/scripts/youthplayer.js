@@ -2,7 +2,7 @@ let userId;
 let thread;
 
 const run = function() {
-	const mainBody = document.getElementById('mainBody');
+	const mainBody = document.querySelector('#mainBody');
 	const button = document.createElement('A');
 	button.attributes.role = 'button';
 	button.title = chrome.i18n.getMessage('sendmail');
@@ -16,7 +16,7 @@ const sendMailAction = function() {
 	chrome.storage.local.get(['thread'], result => {
 		thread = result.thread;
 	});
-	const player = document.getElementsByClassName('hasByline')[0].innerText;
+	const player = document.querySelector('.hasByline').innerText;
 	const playerName = player.substring(0, player.lastIndexOf(' ')).trim();
 	const playerId = player.substring(player.indexOf('(') + 1, player.indexOf(')')).trim();
 
@@ -49,7 +49,7 @@ const savePlayer = function(playerName, playerId) {
 
 const checkRedirect = function() {
 	if(thread && thread !== '' && userId) {
-		window.location.href = '/MyHattrick/Inbox/?actionType=newMail&userId=' + userId;
+		window.location.href = '/MyHattrick/Inbox/?actionType=newMail&userId=' + userId + '&youthPlayerMail=true';
 	}
 };
 
@@ -59,7 +59,7 @@ const getUserId = function(managerUrl) {
 	    .then(text => {
 	    	let parser = new DOMParser();
 		    let htmlDocument = parser.parseFromString(text, "text/html");
-		    let byLine = htmlDocument.documentElement.getElementsByClassName("hasByline")[0];
+		    let byLine = htmlDocument.documentElement.querySelector(".hasByline");
 		    userId = byLine.innerText.substring(byLine.innerText.indexOf('(') + 1, byLine.innerText.indexOf(')')).trim();
 	    })
 	    .catch(err => console.log(err));

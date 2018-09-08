@@ -16,9 +16,9 @@ let buttons;
 let thread;
 
 let player;
-const mailBody = document.getElementById('ctl00_ctl00_CPContent_CPMain_ucEditorMain_txtBody');
-const mailSubject = document.getElementById('ctl00_ctl00_CPContent_CPMain_tbSubject');
-const table = document.getElementsByClassName('form thin')[0] ;
+const mailBody = document.querySelector('#ctl00_ctl00_CPContent_CPMain_ucEditorMain_txtBody');
+const mailSubject = document.querySelector('#ctl00_ctl00_CPContent_CPMain_tbSubject');
+const table = document.querySelector('div.info > table.form, div.infor > table.thin');
 const container = document.createElement('DIV');
 const threadSpan = document.createElement('SPAN');
 let asycCompleted = 0;
@@ -33,7 +33,7 @@ const run = function() {
 	createThreadSpan();
     buttons = msgs.map((message, index) => createButton(message, index));
 
-	let sendMailButton = document.getElementById('ctl00_ctl00_CPContent_CPMain_btnSendNew');
+	let sendMailButton = document.querySelector('#ctl00_ctl00_CPContent_CPMain_btnSendNew');
 	sendMailButton.addEventListener('click', () => clearPlayer());
 };
 

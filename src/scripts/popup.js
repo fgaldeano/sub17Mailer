@@ -1,8 +1,6 @@
 (function() {
-	console.log(document);
-	console.log(document.getElementById('okButton'));
-	let button = document.getElementById('okButton');
-	let threadInput = document.getElementById('threadInput');
+	let button = document.querySelector('#okButton');
+	let threadInput = document.querySelector('#threadInput');
 
 	button.addEventListener('click', function() {	
 	    chrome.storage.local.set({"thread":threadInput.value}, function(){});

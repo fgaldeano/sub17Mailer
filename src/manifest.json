@@ -24,8 +24,8 @@
                 "scripts/youthmail.js"
             ],
             "matches": [
-                "http://*.hattrick.org/MyHattrick/Inbox/*newMail*",
-                "https://*.hattrick.org/MyHattrick/Inbox/*newMail*"
+                "http://*.hattrick.org/MyHattrick/Inbox/*newMail*youthPlayerMail*",
+                "https://*.hattrick.org/MyHattrick/Inbox/*newMail*youthPlayerMail*"
             ]
         },
         {
@@ -57,7 +57,7 @@
     	"storage",
         "https://drive.google.com/*"
     ],
-    "version": "1.0.4",
+    "version": "1.1.0",
     "web_accessible_resources" : [
     	"resources/*.jpg",
     	"resources/*.png",
