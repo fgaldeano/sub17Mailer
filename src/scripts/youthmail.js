@@ -1,11 +1,69 @@
 let subject = 'Crack en inferiores: :playerName';
-const urls = [
-	'https://drive.google.com/open?id=1K6zS2XX1adT0wgBDF-7K4DB79Uyo7RdUqJP_6RYzK44', // normal
-	'https://drive.google.com/open?id=157ugVo13Bp7ibZ-knSui1Y3_gakC3ee-gj45cuTuggY', // best no friendly
-	'https://drive.google.com/open?id=1NKpYDpocY2zp8EBLIZF_OjzpB-rXMeWLTfQ2CuKmtVM', // best no league
-	'https://drive.google.com/open?id=16d9QdobMJXkV_50qjcGQc_FDSWp4MQPhC04HULZKBeI'  // best normal
-];
-const bodies = ['', '', '', ''];
+
+const bodies = [`Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
+
+Te pedimos que pases por este thread para mostrarlo: [post={4}]. Ahí te vamos a brindar todo tipo de asesoramiento para optimizar su entrenamiento y mejorar tus inferiores.
+
+En el foro, tenés que indicarnos:
+- Habilidades del jugador
+- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
+- Los comentarios del cazatalentos
+- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
+
+Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
+
+Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
+
+Suerte!`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
+
+[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
+
+[b]Por ejemplo: Sabías que en inferiores podes pactar amistosos cada 20 días y éstos son un entrenamiento extra para tus jugadores?[/b] Vemos que no has pactado en el último mes, estás perdiendo entrenamiento... más y más consejos por acá: [post={4}]
+
+En el foro, tenes que indicarnos:
+- Habilidades del jugador
+- Los comentarios del cazatalentos
+- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
+- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
+
+Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
+
+Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
+
+Suerte!`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
+
+[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
+
+[b]Por ejemplo: Sabías que hay un truco para poder jugar más partidos y, por ende, que tus jugadores reciban más entrenamiento? Para esto debes jugar en ligas de 4 equipos (cosa que no estás haciendo). Una vez que termina, salís de la liga y te metes en otra (también de 4 equipos) que empiece a los 2/3 días. De está manera, no tenes que esperar 7 días para el próximo partido y entonces ganas un entrenamiento extra en ese semana.[/b] Por lo que tus jugadores podrían estar recibiendo más entrenamiento... más y más consejos por acá: [post={4}]
+
+En el foro tenes que indicarnos:
+- Habilidades del jugador
+- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
+- Los comentarios del cazatalentos
+- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
+
+Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
+
+Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
+
+Suerte!
+`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
+
+[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
+
+Te pedimos que pases por este thread: [post={4}]. Ahí te vamos a brindar todo tipo de asesoramiento para optimizar su entrenamiento y mejorar tus inferiores.
+
+En el mismo, tenes que indicarnos:
+- Habilidades del jugador
+- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
+- Los comentarios del cazatalentos
+- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
+
+Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
+
+Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
+
+Suerte!`];
 const msgs = [
 	chrome.i18n.getMessage('normal'), 
 	chrome.i18n.getMessage('bestNoFriendly'), 
@@ -21,7 +79,6 @@ const mailSubject = document.querySelector('#ctl00_ctl00_CPContent_CPMain_tbSubj
 const table = document.querySelector('div.info > table.form, div.infor > table.thin');
 const container = document.createElement('DIV');
 const threadSpan = document.createElement('SPAN');
-let asycCompleted = 0;
 
 const run = function() {
 	if(!player) {
@@ -55,7 +112,6 @@ const hide = function(elm) {
 
 const show = function(elm) {
 	elm.style.visibility = 'visible';
-	asycCompleted++;
 }
 
 const sendMailAction = function(index) {
@@ -88,22 +144,6 @@ chrome.storage.local.get(['player'], result => {
 	run();
 });
 
-bodies.map((body, index) => {
-	fetch(urls[index])
-		.then(response => response.text())
-		.then(text => {
-			let txt = text.substring(text.indexOf('"s":"') + 5).split('"', 2);
-			show(buttons[index]);
-			let result = txt[0].replace(/\\n/g, '\n').replace(/\\u003d/, '=');
-			bodies[index] = result;
-			if(asycCompleted > 5) {
-				show(container);
-			}
-			return result;
-		})
-		.catch(err => console.log(err));
-});
-
 chrome.storage.local.get(['thread'], result => {
 	thread = result.thread;
 	let splitted = thread.split('.');
@@ -123,11 +163,11 @@ chrome.storage.local.get(['thread'], result => {
 			}
 			if(threadSpan.innerHTML === '&nbsp;') {
 				threadSpan.innerText = chrome.i18n.getMessage('threadNotFound');
-				asycCompleted++;
 			}
-			if(asycCompleted > 5) {
-				show(container);
+			for(button of buttons) {
+				show(button);
 			}
+			show(container);
 		})
 		.catch(err => console.log(err));
 });

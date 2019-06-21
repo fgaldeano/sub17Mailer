@@ -17,7 +17,7 @@ const sendMailAction = function() {
 		thread = result.thread;
 	});
 	const player = document.querySelector('.hasByline').innerText;
-	const playerName = player.substring(0, player.lastIndexOf(' ')).trim();
+	const playerName = player.substring(0, player.lastIndexOf('(')-1).trim();
 	const playerId = player.substring(player.indexOf('(') + 1, player.indexOf(')')).trim();
 
 	let managerUrl = getManagerUrl();
