@@ -9,6 +9,13 @@ Descarga el archivo de extension a tu ordenador: [Descargar Ahora](https://githu
 
 Luego arrastra el fichero descargado a una pestaña de chorme, y acepta el pedido de instalación.
 
+### Si no te deja instalarlo, instalá extension sin empaquetar:
+
+Descarga el código fuente: [Descargar Ahora](https://github.com/fgaldeano/sub17Mailer/archive/master.zip) y descomprimilo en el lugar que mas te guste.
+
+En las extensiones de chrome, habilitá el modo desarrollador, luego hace click en **Cargar extensión sin empaquetar**.
+Elegi la carpeta src, que esta dentro de sub17Mailer.
+
 ## Usando la extension:
 
 ### Para mandar mails de cracks
@@ -33,12 +40,5 @@ Para cambiarlo, en la barra del chrome, a la derecha de la barra de direcciones,
 
 El hilo quedará guardado para futuros usos.
 
-### Para exportar mejores jugadores a csv
-
-En la pagina de Los Mejores Jugadores de Hattirck, al buscar en Juveniles, aparecerá un link a exportar a csv, en la esquina superior derecha de la tabla.
-
-Haz click en el link, y guardá el csv donde mas te convenga.
-
-Eso es todo.
 
 Happy recruiting!
