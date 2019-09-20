@@ -78,5 +78,9 @@
 	"csvHeader_position": {
 		"message": "Posición",
 		"description": "header for csv exports."
+	},
+	"csvHeader_date": {
+		"message": "Fecha",
+		"description": "header for csv exports."
 	}
 }
