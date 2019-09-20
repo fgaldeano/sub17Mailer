@@ -68,7 +68,7 @@ const getRowFromTR = function(tr, position, now) {
 		index++;
 	}
 	rowArray.push(position);
-	rowArray.push('' + (now.getMonth() + 1) + '/' + now.getDay() + '/' + now.getFullYear());
+	rowArray.push('' + (now.getMonth() + 1) + '/' + now.getDate() + '/' + now.getFullYear());
 	return rowArray;
 };
 
