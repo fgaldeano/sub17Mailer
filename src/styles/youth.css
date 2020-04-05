@@ -42,6 +42,10 @@
 	padding-bottom: 5px;
 }
 
+.blacklisted, .blacklisted[title] {
+	color: red;
+}
+
 @-moz-document url-prefix() {
 	#sendMailButton {
 		background-image: url('moz-extension://__MSG_@@extension_id__/resources/mail.png');

@@ -1,5 +1,6 @@
 let userId;
 let thread;
+const defaultThread = '17246456.1';
 
 const run = function() {
 	const mainBody = document.querySelector('#mainBody');
@@ -67,7 +68,7 @@ const getUserId = function(managerUrl) {
 
 chrome.storage.local.get(['thread'], result => {
 	if(!result.thread) {
-		chrome.storage.local.set({"thread":'17084291.1'}, () => {});
+		chrome.storage.local.set({"thread":defaultThread}, () => {});
 	}
 	run();
 });

@@ -52,12 +52,16 @@
     },
     "manifest_version": 2,
     "name": "__MSG_appName__",
+    "content_security_policy": "script-src 'self' https://cdn.firebase.com https://www.gstatic.com/firebasejs/5.3.0/firebase.js https://*.firebaseio.com; object-src 'self'",
     "permissions": [
     	"activeTab", 
-    	"storage",
-        "https://drive.google.com/*"
+    	"storage"
     ],
-    "version": "1.1.0",
+    "background": {
+       "page": "background.html",
+       "persistent": false
+    },
+    "version": "1.2.0",
     "web_accessible_resources" : [
     	"resources/*.jpg",
     	"resources/*.png",

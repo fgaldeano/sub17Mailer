@@ -1,84 +1,25 @@
-let subject = 'Crack en inferiores: :playerName';
-
-const bodies = [`Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
-
-Te pedimos que pases por este thread para mostrarlo: [post={4}]. Ahí te vamos a brindar todo tipo de asesoramiento para optimizar su entrenamiento y mejorar tus inferiores.
-
-En el foro, tenés que indicarnos:
-- Habilidades del jugador
-- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
-- Los comentarios del cazatalentos
-- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
-
-Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
-
-Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
-
-Suerte!`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
-
-[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
-
-[b]Por ejemplo: Sabías que en inferiores podes pactar amistosos cada 20 días y éstos son un entrenamiento extra para tus jugadores?[/b] Vemos que no has pactado en el último mes, estás perdiendo entrenamiento... más y más consejos por acá: [post={4}]
-
-En el foro, tenes que indicarnos:
-- Habilidades del jugador
-- Los comentarios del cazatalentos
-- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
-- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
-
-Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
-
-Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
-
-Suerte!`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
-
-[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
-
-[b]Por ejemplo: Sabías que hay un truco para poder jugar más partidos y, por ende, que tus jugadores reciban más entrenamiento? Para esto debes jugar en ligas de 4 equipos (cosa que no estás haciendo). Una vez que termina, salís de la liga y te metes en otra (también de 4 equipos) que empiece a los 2/3 días. De está manera, no tenes que esperar 7 días para el próximo partido y entonces ganas un entrenamiento extra en ese semana.[/b] Por lo que tus jugadores podrían estar recibiendo más entrenamiento... más y más consejos por acá: [post={4}]
-
-En el foro tenes que indicarnos:
-- Habilidades del jugador
-- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
-- Los comentarios del cazatalentos
-- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
-
-Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
-
-Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
-
-Suerte!
-`, `Buenas, del staff de la Sub17 Argentina estamos interesados en tu jugador [b]{0} {1}[/b] por el rendimiento que tuvo.
-
-[b]Tu jugador está entre los mejores 15 de esta barrida, de acuerdo a su edad/rendimientos/especialidad, así que no dejes de pasar![/b]
-
-Te pedimos que pases por este thread: [post={4}]. Ahí te vamos a brindar todo tipo de asesoramiento para optimizar su entrenamiento y mejorar tus inferiores.
-
-En el mismo, tenes que indicarnos:
-- Habilidades del jugador
-- El entrenamiento actual (primario y secundario) y si el jugador es prioridad.
-- Los comentarios del cazatalentos
-- ¿Cuál es tu intención para con el jugador una vez promocionado? venderlo o entrenarlo?
-
-Muchas gracias por tu tiempo, la única manera de que no se nos escape ninguna promesa para la selección Argentina es con la ayuda de managers como vos.
-
-Si decidís no pasar, nos serviría saber el motivo para modificar lo que sea necesario. Lo mismo si no queres recibir mas mails como este, nos avisas y te anotamos en la lista negra.
-
-Suerte!`];
+let subject = '';
+let bodies = [];
+let blacklist = [];
 const msgs = [
 	chrome.i18n.getMessage('normal'), 
 	chrome.i18n.getMessage('bestNoFriendly'), 
 	chrome.i18n.getMessage('bestNoLeague'),
 	chrome.i18n.getMessage('bestNormal')
 ];
-let buttons;
-let thread;
 
-let player;
 const mailBody = document.querySelector('#ctl00_ctl00_CPContent_CPMain_ucEditorMain_txtBody');
 const mailSubject = document.querySelector('#ctl00_ctl00_CPContent_CPMain_tbSubject');
 const table = document.querySelector('div.info > table.form, div.infor > table.thin');
 const container = document.createElement('DIV');
 const threadSpan = document.createElement('SPAN');
+const userTo = document.querySelector('#ctl00_ctl00_CPContent_CPMain_tbTo');
+
+let buttons;
+let thread;
+
+let player;
+
 
 const run = function() {
 	if(!player) {
@@ -86,14 +27,22 @@ const run = function() {
 	}
 	mailSubject.value = subject.replace(':playerName', player.name);
 	container.className = 'pasteMailContainer';
+	checkBlackList();
 	hide(container);
 	createThreadSpan();
-    buttons = msgs.map((message, index) => createButton(message, index));
+  buttons = msgs.map((message, index) => createButton(message, index));
 
 	let sendMailButton = document.querySelector('#ctl00_ctl00_CPContent_CPMain_btnSendNew');
 	sendMailButton.addEventListener('click', () => clearPlayer());
 };
 
+const checkBlackList = function() {
+	let username = userTo.value.trim();
+	if(blacklist.includes(username)) {
+		userTo.className = 'blacklisted';
+		userTo.setAttribute('title', 'El usuario esta en la lista negra!');
+	}
+}
 const createThreadSpan = function() {
 	threadSpan.innerHTML = '&nbsp;';
 	threadSpan.id = 'threadSpan';
@@ -141,7 +90,12 @@ const clearPlayer = function() {
 
 chrome.storage.local.get(['player'], result => {
 	player = result.player;
-	run();
+	chrome.runtime.sendMessage({command: "get"}, (msg) => {
+		blacklist = msg.data.blacklist;
+	  subject = msg.data.content.subject;
+	  bodies = msg.data.content.bodies;
+	  run();
+	});
 });
 
 chrome.storage.local.get(['thread'], result => {

@@ -5,9 +5,7 @@
 
 ### Para Google Chrome:
 
-Descarga el archivo de extension a tu ordenador: [Descargar Ahora](https://github.com/fgaldeano/sub17Mailer/raw/master/bin/sub17Mailer.crx)
-
-Luego arrastra el fichero descargado a una pestaña de chorme, y acepta el pedido de instalación.
+Accede a la pagina de chrome extensions: https://chrome.google.com/webstore/detail/ayudante-de-correos-para/nflnbpccmjkfehifkgmfnnofibfcagec?hl=es&authuser=0 e instalalo desde alli!
 
 ### Si no te deja instalarlo, instalá extension sin empaquetar:
 
