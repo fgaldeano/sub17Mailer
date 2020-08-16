@@ -73,14 +73,19 @@ const getRowFromTR = function(tr, position, now) {
 };
 
 const getNumberFromStars = function(stars) {
-	let number = 0;
+    	let number = 0;
 	let intPart = stars.querySelector('.stars-full');
 	let decimalPart = stars.querySelector('.stars-half');
-	if(decimalPart) {
-		number = parseFloat(intPart.innerText + decimalPart.innerText);
-	} else {
-		number = parseInt(intPart.innerText);
-	}
+        if(!intPart) { /* If there was no stars-full, check for
+			  stars-full-twodigits.  */
+	        intPart = stars.querySelector('.stars-full-twodigits');
+                decimalPart = stars.querySelector('.stars-half-twodigits');
+        }
+        if(decimalPart) {
+	        number = parseFloat(intPart.innerText + decimalPart.innerText);
+        } else {
+	        number = parseInt(intPart.innerText);
+        }
 	return number;
 };
 
