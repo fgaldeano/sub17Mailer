@@ -25,12 +25,12 @@ const run = function() {
 	if(!player) {
 		return;
 	}
+	buttons = msgs.map((message, index) => createButton(message, index));
 	mailSubject.value = subject.replace(':playerName', player.name);
 	container.className = 'pasteMailContainer';
 	checkBlackList();
 	hide(container);
 	createThreadSpan();
-  buttons = msgs.map((message, index) => createButton(message, index));
 
 	let sendMailButton = document.querySelector('#ctl00_ctl00_CPContent_CPMain_btnSendNew');
 	sendMailButton.addEventListener('click', () => clearPlayer());

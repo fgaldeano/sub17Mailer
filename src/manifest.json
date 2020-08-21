@@ -61,7 +61,7 @@
        "page": "background.html",
        "persistent": false
     },
-    "version": "1.2.0",
+    "version": "1.2.2",
     "web_accessible_resources" : [
     	"resources/*.jpg",
     	"resources/*.png",
