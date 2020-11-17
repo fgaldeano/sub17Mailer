@@ -15,7 +15,7 @@ const container = document.createElement('DIV');
 const threadSpan = document.createElement('SPAN');
 const userTo = document.querySelector('#ctl00_ctl00_CPContent_CPMain_tbTo');
 
-let buttons;
+let buttons = [];
 let thread;
 
 let player;
@@ -30,7 +30,6 @@ const run = function() {
 	checkBlackList();
 	hide(container);
 	createThreadSpan();
-  buttons = msgs.map((message, index) => createButton(message, index));
 
 	let sendMailButton = document.querySelector('#ctl00_ctl00_CPContent_CPMain_btnSendNew');
 	sendMailButton.addEventListener('click', () => clearPlayer());
@@ -117,6 +116,9 @@ chrome.storage.local.get(['thread'], result => {
 			}
 			if(threadSpan.innerHTML === '&nbsp;') {
 				threadSpan.innerText = chrome.i18n.getMessage('threadNotFound');
+			}
+			if(buttons.length < 1) {
+				buttons = msgs.map((message, index) => createButton(message, index));
 			}
 			for(button of buttons) {
 				show(button);
