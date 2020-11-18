@@ -107,9 +107,9 @@ chrome.storage.local.get(['thread'], result => {
 		    let htmlDocument = parser.parseFromString(text, "text/html");
 			let result = htmlDocument.querySelectorAll('div.mainConf > div.boxHead > h2 > span.float_left > a[href*="/Forum/Read.aspx"]');
 			threadSpan.title = thread;
-			
+			let regex = /sub\s*17/i;
 			for(title of result) {
-				if(title.innerText.indexOf('Sub17') !== -1) {
+				if(regex.test(title.innerText)) {
 					threadSpan.innerText = title.innerText;
 					break;
 				}
